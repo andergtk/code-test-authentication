@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  app-tests:
+    build: .
+    depends_on:
+      - mongo
+    environment:
+      - MONGODB_URI=mongodb://root:root123123@mongo:27017/db?authSource=admin
+    command: sh -c "npm test"
+  mongo:
+    image: mongo:3.4.24-xenial
+    environment:
+      - MONGO_INITDB_DATABASE=db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root123123
+    ports:
+      - 27017:27017
+    logging:
+      driver: none
